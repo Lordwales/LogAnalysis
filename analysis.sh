@@ -27,6 +27,14 @@ then
   echo "REQUEST, PUT /dev/report/ was found: $PUTOCCUR times"
   rm tmp_file 
 
+# Get unique IP addresses that made requests
+  FETCHCOUNT5= grep 'PUT /dev/report/' $FILE | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | sort | uniq -c | tee tmp_file 
+  UNIQUEIP=$(< tmp_file)
+  echo "Breakdown of Unique IP addresses that made PUT /dev/report/ requests: $UNIQUEIP"
+  rm tmp_file
+
+  #FETCHCOUNT5= grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' $FILE | sort | uniq | wc -l | tee tmp_file  
+
 else
   echo "File does not exist"
 fi
